@@ -1,6 +1,5 @@
 import Grid from '@mui/material/Grid2';
-import AddItemsButton from './containers/Tools/AddItemsButton';
-import RemoveItemsButton from './containers/Tools/RemoveItemsButton';
+import QrCodeScannerButton from './containers/Tools/QrCodeScannerButton';
 import ScanModal from '../organisms/ScanModal';
 import DarkModeSwitch from './containers/Tools/DarkModeSwitch';
 
@@ -8,15 +7,12 @@ import DarkModeSwitch from './containers/Tools/DarkModeSwitch';
 const Tools = () => {
   return (
     <Grid container>
-      <Grid size={2}>
-        <AddItemsButton />
+      <Grid size={3}>
+        <QrCodeScannerButton />
       </Grid>
-      <Grid size={2}>
-        <RemoveItemsButton />
-      </Grid>
-      <Grid size={2}>Report</Grid>
-      <Grid size={2}>Alert</Grid>
-      <Grid size={4}>
+      <Grid size={3}>Report</Grid>
+      <Grid size={3}>Alert</Grid>
+      <Grid size={3}>
         <DarkModeSwitch />
       </Grid>
       <ScanModal />

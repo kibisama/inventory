@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import OriginSelector from './containers/ScanModalOptions/OriginSelector';
-import DateInDatePicker from './containers/ScanModalOptions/DateInDatePicker';
+import InputDatePicker from './containers/ScanModalOptions/InputDatePicker';
+import ModeSelector from './containers/ScanModalOptions/ModeSelector';
 
 const style = {
   width: '100%',
@@ -12,8 +13,9 @@ const style = {
 const ScanModalOptions = (props) => {
   return (
     <Box style={style}>
-      <OriginSelector />
-      <DateInDatePicker />
+      <ModeSelector />
+      <InputDatePicker disabled={props.mode !== 'Receive'} />
+      <OriginSelector disabled={props.mode !== 'Receive'} />
     </Box>
   );
 };

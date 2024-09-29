@@ -1,33 +1,32 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrigin } from '../../../reduxjs@toolkit/scanSlice';
+import { setMode } from '../../../reduxjs@toolkit/scanSlice';
 import MySelector from '../../../atoms/MySelector';
 
 const style = {
   width: 180,
 };
 
-const OriginSelector = (props) => {
+const ModeSelector = () => {
   const dispatch = useDispatch();
-  const { origin } = useSelector((state) => state.scan);
+  const { mode } = useSelector((state) => state.scan);
   const handleChange = React.useCallback(
     (e) => {
-      dispatch(setOrigin(e.target.value));
+      dispatch(setMode(e.target.value));
     },
     [dispatch],
   );
-  const menuItem = ['Cardinal', 'PharmSaver'];
+  const menuItem = ['Receive', 'Fill', 'Reverse', 'Return'];
 
   return (
     <MySelector
       sx={style}
-      label="Origin"
-      value={origin}
+      label="Mode"
+      value={mode}
       onChange={handleChange}
       menuItem={menuItem}
-      disabled={props.disabled}
     />
   );
 };
 
-export default OriginSelector;
+export default ModeSelector;

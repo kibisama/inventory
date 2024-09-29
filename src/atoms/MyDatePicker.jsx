@@ -5,12 +5,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 const MyDatePicker = (props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        sx={props.sx}
-        label="props.label"
-        value={props.value}
-        onChange={props.onChange}
-      />
+      <DatePicker {...props} />
     </LocalizationProvider>
   );
 };

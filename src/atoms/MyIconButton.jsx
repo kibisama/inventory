@@ -1,6 +1,5 @@
 import { IconButton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
 const MyIconButton = (props) => {
   return (
@@ -10,10 +9,8 @@ const MyIconButton = (props) => {
     >
       {(() => {
         switch (props.variant) {
-          case 'add':
-            return <AddIcon />;
-          case 'remove':
-            return <RemoveIcon />;
+          case 'qrcodescanner':
+            return <QrCodeScannerIcon />;
           default:
             return;
         }

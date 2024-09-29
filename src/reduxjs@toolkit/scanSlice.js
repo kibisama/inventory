@@ -17,22 +17,29 @@ const asyncInvScan = createAsyncThunk(
 const scanSlice = createSlice({
   name: 'scan',
   initialState: {
-    mode: null,
-    dateIn: dayjs().format(),
-    origin: 0,
+    open: false,
+    mode: 'Receive',
+    inputDate: dayjs().format(),
+    origin: 'Cardinal',
     isUpdating: false,
     isUpdated: false,
     error: null,
   },
   reducers: {
+    setOpen: (state, action) => {
+      state.open = action.payload;
+    },
     setMode: (state, action) => {
       state.mode = action.payload;
     },
-    setDateIn: (state, action) => {
-      state.addDate = action.payload;
+    setInputDate: (state, action) => {
+      state.inputDate = action.payload;
     },
     setOrigin: (state, action) => {
       state.origin = action.payload;
+    },
+    initIsUpdated: (state) => {
+      state.isUpdated = false;
     },
   },
   extraReducers: (builder) => {
@@ -52,5 +59,6 @@ const scanSlice = createSlice({
 });
 
 export default scanSlice.reducer;
-export const { setMode, setDateIn, setOrigin } = scanSlice.actions;
+export const { setOpen, setMode, setInputDate, setOrigin, initIsUpdated } =
+  scanSlice.actions;
 export { asyncInvScan };

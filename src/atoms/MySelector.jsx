@@ -11,12 +11,14 @@ const MySelector = (props) => {
     <FormControl sx={props.sx}>
       <InputLabel>{props.label}</InputLabel>
       <Select
+        label={props.label}
         value={props.value}
         onChange={props.onChange}
         onClose={handleClose}
+        disabled={props.disabled}
       >
         {props.menuItem.map((v, i) => (
-          <MenuItem value={i} key={i}>
+          <MenuItem value={v} key={i}>
             {v}
           </MenuItem>
         ))}

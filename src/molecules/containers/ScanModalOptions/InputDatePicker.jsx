@@ -1,19 +1,19 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDateIn } from '../../../reduxjs@toolkit/scanSlice';
+import { setInputDate } from '../../../reduxjs@toolkit/scanSlice';
 import MyDatePicker from '../../../atoms/MyDatePicker';
 
 const style = {
   width: 180,
 };
 
-const DateInDatePicker = () => {
+const InputDatePicker = (props) => {
   const dispatch = useDispatch();
-  const { dateIn } = useSelector((state) => state.scan);
+  const { inputDate } = useSelector((state) => state.scan);
   const handleChange = React.useCallback(
     (dayjs) => {
-      dispatch(setDateIn(dayjs.format()));
+      dispatch(setInputDate(dayjs.format()));
     },
     [dispatch],
   );
@@ -22,10 +22,11 @@ const DateInDatePicker = () => {
     <MyDatePicker
       sx={style}
       label="Date Received"
-      value={dayjs(dateIn)}
+      value={dayjs(inputDate)}
       onChange={handleChange}
+      disabled={props.disabled}
     />
   );
 };
 
-export default DateInDatePicker;
+export default InputDatePicker;
