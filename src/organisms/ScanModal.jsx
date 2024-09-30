@@ -23,7 +23,7 @@ const style = {
 
 const ScanModal = () => {
   const dispatch = useDispatch();
-  const { open, mode, inputDate, origin } = useSelector((state) => state.scan);
+  const { open, mode, inputDate, source } = useSelector((state) => state.scan);
   const handleClose = React.useCallback(() => {
     dispatch(setOpen(false));
   }, [dispatch]);
@@ -33,11 +33,11 @@ const ScanModal = () => {
         mode,
         dataMatrix,
         inputDate,
-        origin,
+        source,
       };
       dispatch(asyncInvScan(body));
     },
-    [inputDate, mode, origin, dispatch],
+    [inputDate, mode, source, dispatch],
   );
   const onError = React.useCallback(() => {
     console.log('error');

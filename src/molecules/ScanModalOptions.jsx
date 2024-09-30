@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import OriginSelector from './containers/ScanModalOptions/OriginSelector';
+import SourceSelector from './containers/ScanModalOptions/SourceSelector';
 import InputDatePicker from './containers/ScanModalOptions/InputDatePicker';
 import ModeSelector from './containers/ScanModalOptions/ModeSelector';
 
@@ -15,7 +15,7 @@ const ScanModalOptions = (props) => {
     <Box style={style}>
       <ModeSelector />
       <InputDatePicker disabled={props.mode !== 'Receive'} />
-      <OriginSelector disabled={props.mode !== 'Receive'} />
+      <SourceSelector disabled={props.mode !== 'Receive'} />
     </Box>
   );
 };

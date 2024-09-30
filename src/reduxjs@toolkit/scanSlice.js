@@ -20,7 +20,7 @@ const scanSlice = createSlice({
     open: false,
     mode: 'Receive',
     inputDate: dayjs().format(),
-    origin: 'Cardinal',
+    source: 'Cardinal',
     isUpdating: false,
     isUpdated: false,
     error: null,
@@ -35,8 +35,8 @@ const scanSlice = createSlice({
     setInputDate: (state, action) => {
       state.inputDate = action.payload;
     },
-    setOrigin: (state, action) => {
-      state.origin = action.payload;
+    setSource: (state, action) => {
+      state.source = action.payload;
     },
     initIsUpdated: (state) => {
       state.isUpdated = false;
@@ -59,6 +59,6 @@ const scanSlice = createSlice({
 });
 
 export default scanSlice.reducer;
-export const { setOpen, setMode, setInputDate, setOrigin, initIsUpdated } =
+export const { setOpen, setMode, setInputDate, setSource, initIsUpdated } =
   scanSlice.actions;
 export { asyncInvScan };

@@ -1,18 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrigin } from '../../../reduxjs@toolkit/scanSlice';
+import { setSource } from '../../../reduxjs@toolkit/scanSlice';
 import MySelector from '../../../atoms/MySelector';
 
 const style = {
   width: 180,
 };
 
-const OriginSelector = (props) => {
+const SourceSelector = (props) => {
   const dispatch = useDispatch();
-  const { origin } = useSelector((state) => state.scan);
+  const { source } = useSelector((state) => state.scan);
   const handleChange = React.useCallback(
     (e) => {
-      dispatch(setOrigin(e.target.value));
+      dispatch(setSource(e.target.value));
     },
     [dispatch],
   );
@@ -21,8 +21,8 @@ const OriginSelector = (props) => {
   return (
     <MySelector
       sx={style}
-      label="Origin"
-      value={origin}
+      label="Source"
+      value={source}
       onChange={handleChange}
       menuItem={menuItem}
       disabled={props.disabled}
@@ -30,4 +30,4 @@ const OriginSelector = (props) => {
   );
 };
 
-export default OriginSelector;
+export default SourceSelector;

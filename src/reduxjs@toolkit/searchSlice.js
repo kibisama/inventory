@@ -22,7 +22,11 @@ const searchSlice = createSlice({
     isUpdated: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setQuery: (state, action) => {
+      state.query = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(asyncGetInv.pending, (state, action) => {
       state.isUpdating = true;
@@ -41,6 +45,5 @@ const searchSlice = createSlice({
 });
 
 export default searchSlice.reducer;
-// export const { } =
-//   searchSlice.actions;
+export const { setQuery } = searchSlice.actions;
 export { asyncGetInv };
