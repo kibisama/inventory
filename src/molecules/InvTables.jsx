@@ -25,7 +25,7 @@ const InvTables = (props) => {
         <Box sx={style.table} key={i}>
           <MyTable
             sx={style.table}
-            label={`${v.gtin} (${v.rows.length})`}
+            label={`${v.label} (${v.rows.length})`}
             heads={tableHeads}
             keys={tableKeys}
             rows={v.rows}

@@ -11,18 +11,18 @@ const ScanStatusDiagram = () => {
   const dispatch = useDispatch();
   const { isUpdating, isUpdated, error } = useSelector((state) => state.scan);
   React.useEffect(() => {
-    if (isUpdated) {
+    if (isUpdated && error == null) {
       setTimeout(() => {
         dispatch(initIsUpdated());
       }, 5000);
     }
-  }, [dispatch, isUpdated]);
+  }, [dispatch, isUpdated, error]);
   return (
     <div>
-      {error ? (
-        <img src={warning} />
-      ) : isUpdating ? (
+      {isUpdating ? (
         <img src={loading} />
+      ) : error ? (
+        <img src={warning} />
       ) : isUpdated ? (
         <img src={verified} />
       ) : (

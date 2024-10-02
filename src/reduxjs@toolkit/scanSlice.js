@@ -41,6 +41,9 @@ const scanSlice = createSlice({
     initIsUpdated: (state) => {
       state.isUpdated = false;
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(asyncInvScan.pending, (state, action) => {
@@ -49,16 +52,26 @@ const scanSlice = createSlice({
     builder.addCase(asyncInvScan.fulfilled, (state, action) => {
       state.isUpdating = false;
       state.isUpdated = true;
+      if (action.payload.error != null) {
+        state.error = action.payload.error;
+      } else {
+        state.error = null;
+      }
     });
     builder.addCase(asyncInvScan.rejected, (state, action) => {
-      state.error = action.payload;
-      console.log(state.error);
+      state.error = 500;
       state.isUpdating = false;
     });
   },
 });
 
 export default scanSlice.reducer;
-export const { setOpen, setMode, setInputDate, setSource, initIsUpdated } =
-  scanSlice.actions;
+export const {
+  setOpen,
+  setMode,
+  setInputDate,
+  setSource,
+  initIsUpdated,
+  setError,
+} = scanSlice.actions;
 export { asyncInvScan };

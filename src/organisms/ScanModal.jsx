@@ -2,10 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Modal } from '@mui/material';
 import useScanDetection from '../hooks/useScanDetection';
-import { asyncInvScan } from '../reduxjs@toolkit/scanSlice';
-import { setOpen } from '../reduxjs@toolkit/scanSlice';
+import {
+  asyncInvScan,
+  initIsUpdated,
+  setOpen,
+  setError,
+} from '../reduxjs@toolkit/scanSlice';
 import UpperRightCloseButton from '../atoms/UpperRightCloseButton';
 import ScanStatusDiagram from '../molecules/containers/ScanModalOptions/ScanStatusDiagram';
+import ChildModal from '../molecules/containers/ScanModalOptions/ChildModal';
 import ScanModalOptions from '../molecules/ScanModalOptions';
 
 const style = {
@@ -26,6 +31,8 @@ const ScanModal = () => {
   const { open, mode, inputDate, source } = useSelector((state) => state.scan);
   const handleClose = React.useCallback(() => {
     dispatch(setOpen(false));
+    dispatch(initIsUpdated());
+    dispatch(setError(null));
   }, [dispatch]);
   const onComplete = React.useCallback(
     (dataMatrix) => {
@@ -40,12 +47,12 @@ const ScanModal = () => {
     [inputDate, mode, source, dispatch],
   );
   const onError = React.useCallback(() => {
-    console.log('error');
-  }, []);
+    dispatch(setError(99));
+  }, [dispatch]);
   useScanDetection({
     onComplete: onComplete,
     onError: onError,
-    minLength: 50,
+    minLength: 40,
     preventDefault: true,
   });
   if (!open) {
@@ -57,6 +64,7 @@ const ScanModal = () => {
       <Box sx={style.box}>
         <UpperRightCloseButton onClick={handleClose} />
         <ScanStatusDiagram />
+        <ChildModal />
         <ScanModalOptions mode={mode} />
       </Box>
     </Modal>
