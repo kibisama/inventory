@@ -10,7 +10,7 @@ import {
 } from '../reduxjs@toolkit/scanSlice';
 import UpperRightCloseButton from '../atoms/UpperRightCloseButton';
 import ScanStatusDiagram from '../molecules/containers/ScanModalOptions/ScanStatusDiagram';
-import ChildModal from '../molecules/containers/ScanModalOptions/ChildModal';
+import ChildErrorModal from './ChildErrorModal';
 import ScanModalOptions from '../molecules/ScanModalOptions';
 import { parseDataMatrix } from '../lib/functions';
 
@@ -73,7 +73,7 @@ const ScanModal = () => {
       <Box sx={style.box}>
         <UpperRightCloseButton onClick={handleClose} />
         <ScanStatusDiagram />
-        <ChildModal />
+        <ChildErrorModal />
         <ScanModalOptions mode={mode} />
       </Box>
     </Modal>

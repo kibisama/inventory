@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Modal } from '@mui/material';
-import beep from '../../../sound/beep.wav';
-import { setError } from '../../../reduxjs@toolkit/scanSlice';
-import UpperRightCloseButton from '../../../atoms/UpperRightCloseButton';
+import beep from '../sound/beep.wav';
+import { setError } from '../reduxjs@toolkit/scanSlice';
+import UpperRightCloseButton from '../atoms/UpperRightCloseButton';
 
 const style = {
   container: {
@@ -32,7 +32,7 @@ const generateErrorMsg = (error) => {
   }
 };
 
-const ChildModal = () => {
+const ChildErrorModal = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.scan);
   const [, setOpen] = React.useState(false);
@@ -59,4 +59,4 @@ const ChildModal = () => {
   );
 };
 
-export default ChildModal;
+export default ChildErrorModal;

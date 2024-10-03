@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid2';
 import QrCodeScannerButton from './containers/Tools/QrCodeScannerButton';
 import ScanModal from '../organisms/ScanModal';
-import DarkModeSwitch from './containers/Tools/DarkModeSwitch';
+import DarkModeButton from './containers/Tools/DarkModeButton';
 
 // Grid 대신 style Flexbox 활용하자
 const Tools = () => {
@@ -13,7 +13,7 @@ const Tools = () => {
       <Grid size={3}>Report</Grid>
       <Grid size={3}>Alert</Grid>
       <Grid size={3}>
-        <DarkModeSwitch />
+        <DarkModeButton />
       </Grid>
       <ScanModal />
     </Grid>
