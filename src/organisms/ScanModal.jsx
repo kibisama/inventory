@@ -12,6 +12,7 @@ import UpperRightCloseButton from '../atoms/UpperRightCloseButton';
 import ScanStatusDiagram from '../molecules/containers/ScanModalOptions/ScanStatusDiagram';
 import ChildModal from '../molecules/containers/ScanModalOptions/ChildModal';
 import ScanModalOptions from '../molecules/ScanModalOptions';
+import { parseDataMatrix } from '../lib/functions';
 
 const style = {
   box: {
@@ -36,9 +37,17 @@ const ScanModal = () => {
   }, [dispatch]);
   const onComplete = React.useCallback(
     (dataMatrix) => {
+      const { gtin, lot, exp, sn } = parseDataMatrix(dataMatrix);
+      if (!gtin || !lot || !exp || !sn) {
+        dispatch(setError(99));
+        return;
+      }
       const body = {
         mode,
-        dataMatrix,
+        gtin,
+        lot,
+        exp,
+        sn,
         inputDate,
         source,
       };
@@ -52,7 +61,7 @@ const ScanModal = () => {
   useScanDetection({
     onComplete: onComplete,
     onError: onError,
-    minLength: 40,
+    minLength: 38,
     preventDefault: true,
   });
   if (!open) {

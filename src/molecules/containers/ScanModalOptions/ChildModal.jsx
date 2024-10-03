@@ -6,22 +6,27 @@ import { setError } from '../../../reduxjs@toolkit/scanSlice';
 import UpperRightCloseButton from '../../../atoms/UpperRightCloseButton';
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 12,
-  borderRadius: 2,
+  container: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 12,
+    borderRadius: 2,
+  },
+  msg: {},
 };
 
 const generateErrorMsg = (error) => {
   switch (error) {
     case 1:
-      return 'The item is expired or has a short expiration date.';
+      return 'The item is expired or has a short expiration date (less than 1 year).';
     case 99:
-      return 'Invalid code. Please scan one more time.';
+      return 'An invalid code scanned. Please scan one more time.';
+    case 500:
+      return '500 Internal server error';
     default:
       return '';
   }
@@ -43,13 +48,12 @@ const ChildModal = () => {
       playBeep();
     }
   }, [error, playBeep]);
-  //   const msg = generateErrorMsg(error);
 
   return (
     <Modal open={error != null} onClose={handleClose}>
-      <Box sx={style}>
+      <Box sx={style.container}>
         <UpperRightCloseButton onClick={handleClose} />
-        {generateErrorMsg(error)}
+        <Box sx={style.msg}>{generateErrorMsg(error)}</Box>
       </Box>
     </Modal>
   );

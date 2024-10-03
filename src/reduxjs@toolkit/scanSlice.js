@@ -47,6 +47,7 @@ const scanSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(asyncInvScan.pending, (state, action) => {
+      state.isUpdated = false;
       state.isUpdating = true;
     });
     builder.addCase(asyncInvScan.fulfilled, (state, action) => {

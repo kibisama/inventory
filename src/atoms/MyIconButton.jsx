@@ -1,5 +1,6 @@
 import { IconButton } from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 
 const MyIconButton = (props) => {
   return (
@@ -11,6 +12,8 @@ const MyIconButton = (props) => {
         switch (props.variant) {
           case 'qrcodescanner':
             return <QrCodeScannerIcon />;
+          case 'summarize':
+            return <SummarizeIcon />;
           default:
             return;
         }

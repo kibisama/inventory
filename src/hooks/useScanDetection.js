@@ -33,7 +33,7 @@ const useScanDetection = (_a) => {
       .slice(1)
       .reduce((total, delta) => total + delta, 0);
     const avg = sum / (buffer.current.length - 1);
-    var code = buffer.current
+    const code = buffer.current
       .slice(startCharacter.length > 0 ? 1 : 0)
       .map((_a) => _a.char)
       .join('');

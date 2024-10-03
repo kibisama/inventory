@@ -14,7 +14,7 @@ const ScanStatusDiagram = () => {
     if (isUpdated && error == null) {
       setTimeout(() => {
         dispatch(initIsUpdated());
-      }, 5000);
+      }, 3000);
     }
   }, [dispatch, isUpdated, error]);
   return (
