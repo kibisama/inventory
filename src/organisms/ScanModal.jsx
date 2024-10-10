@@ -4,7 +4,7 @@ import { Box, Modal } from '@mui/material';
 import useScanDetection from '../hooks/useScanDetection';
 import {
   asyncInvScan,
-  initIsUpdated,
+  setIsUpdated,
   setOpen,
   setError,
 } from '../reduxjs@toolkit/scanSlice';
@@ -30,9 +30,10 @@ const style = {
 const ScanModal = () => {
   const dispatch = useDispatch();
   const { open, mode, inputDate, source } = useSelector((state) => state.scan);
+  const { offLineMode } = useSelector((state) => state.global);
   const handleClose = React.useCallback(() => {
     dispatch(setOpen(false));
-    dispatch(initIsUpdated());
+    dispatch(setIsUpdated(false));
     dispatch(setError(null));
   }, [dispatch]);
   const onComplete = React.useCallback(
@@ -50,10 +51,11 @@ const ScanModal = () => {
         sn,
         inputDate,
         source,
+        offLineMode,
       };
       dispatch(asyncInvScan(body));
     },
-    [inputDate, mode, source, dispatch],
+    [inputDate, mode, source, offLineMode, dispatch],
   );
   const onError = React.useCallback(() => {
     dispatch(setError(99));

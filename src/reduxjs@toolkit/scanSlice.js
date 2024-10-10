@@ -38,8 +38,8 @@ const scanSlice = createSlice({
     setSource: (state, action) => {
       state.source = action.payload;
     },
-    initIsUpdated: (state) => {
-      state.isUpdated = false;
+    setIsUpdated: (state, action) => {
+      state.isUpdated = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -72,7 +72,7 @@ export const {
   setMode,
   setInputDate,
   setSource,
-  initIsUpdated,
+  setIsUpdated,
   setError,
 } = scanSlice.actions;
 export { asyncInvScan };

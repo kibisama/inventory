@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Box } from '@mui/material';
 // Image Copyrights Freepik
 import qrCode from '../../../img/qrCode.gif';
 import verified from '../../../img/verified.gif';
 import loading from '../../../img/loading.gif';
 import warning from '../../../img/warning.gif';
-import { initIsUpdated } from '../../../reduxjs@toolkit/scanSlice';
+import { setIsUpdated } from '../../../reduxjs@toolkit/scanSlice';
 
 const ScanStatusDiagram = () => {
   const dispatch = useDispatch();
@@ -13,12 +14,12 @@ const ScanStatusDiagram = () => {
   React.useEffect(() => {
     if (isUpdated && error == null) {
       setTimeout(() => {
-        dispatch(initIsUpdated());
+        dispatch(setIsUpdated(false));
       }, 3000);
     }
   }, [dispatch, isUpdated, error]);
   return (
-    <div>
+    <Box>
       {isUpdating ? (
         <img src={loading} />
       ) : error ? (
@@ -28,7 +29,7 @@ const ScanStatusDiagram = () => {
       ) : (
         <img src={qrCode} />
       )}
-    </div>
+    </Box>
   );
 };
 
