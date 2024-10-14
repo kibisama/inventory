@@ -60,6 +60,7 @@ const ScanModal = () => {
   const onError = React.useCallback(() => {
     dispatch(setError(99));
   }, [dispatch]);
+
   useScanDetection({
     onComplete: onComplete,
     onError: onError,

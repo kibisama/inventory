@@ -6,7 +6,7 @@ const asyncInvScan = createAsyncThunk(
   'scanSlice/asyncInvScan',
   async (body, { rejectWithValue }) => {
     try {
-      const res = await mongodAPI.invScan(body);
+      const res = await mongodAPI.scanInv(body);
       return res.data;
     } catch (e) {
       return rejectWithValue(e.response.data);

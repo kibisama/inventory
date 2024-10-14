@@ -2,37 +2,35 @@ import * as React from 'react';
 import { Box } from '@mui/material';
 import MyTable from '../atoms/MyTable';
 
-const tableHeads = ['SN', 'Lot', 'Exp.', 'Date Received', 'Source'];
-const tableKeys = ['sn', 'lot', 'exp', 'dateReceived', 'source'];
+const tableHeads = ['SN', 'Lot', 'Exp.', 'Date Received', 'Source', 'Cost'];
+const tableKeys = ['sn', 'lot', 'exp', 'dateReceived', 'source', 'cost'];
 
 const style = {
-  container: {},
-  table: { paddingTop: '1rem' },
+  container: {
+    minWidth: '95%',
+    marginTop: '0.25rem',
+    marginBottom: '0.25rem',
+  },
 };
 
 const InvTables = (props) => {
-  const fadeRow = React.useCallback((row) => {
-    if (row.dateFilled) {
-      return true;
-    } else {
-      return false;
-    }
-  }, []);
+  // const fadeRow = React.useCallback((row) => {
+  //   if (row.dateFilled) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }, []);
 
   return (
     <Box sx={style.container}>
-      {props.data.map((v, i) => (
-        <Box sx={style.table} key={i}>
-          <MyTable
-            sx={style.table}
-            label={`${v.label} (${v.rows.length})`}
-            heads={tableHeads}
-            keys={tableKeys}
-            rows={v.rows}
-            fadeRow={fadeRow}
-          />
-        </Box>
-      ))}
+      <MyTable
+        sx={style.table}
+        heads={tableHeads}
+        keys={tableKeys}
+        rows={props.data}
+        // fadeRow={fadeRow}
+      />
     </Box>
   );
 };

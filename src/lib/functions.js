@@ -12,25 +12,24 @@ export const parseDataMatrix = (dataMatrix) => {
 };
 /**
  *
- * @param {Object} data
- * @returns {Object}
+ * @param {Array} treeItems
+ * @returns {[Array]}
  */
-export const generateDrugTrees = (data) =>
-  data.map((v) => {
-    return {
-      id: v._id,
-      label: v.generic_name,
-      children: v.families.map((w) => {
-        return {
-          id: w._id,
-          label: `${w.brand_name_base}+${w.strength[0]}`, // 0.1.1 버전에서는 name이다
-          children: w.alternatives.map((x) => {
-            return {
-              id: x._id,
-              label: x.manufacturer_name,
-            };
-          }),
-        };
-      }),
-    };
-  });
+export const registerItemId = (treeItems) => {
+  let level = 0;
+  const itemIds = [];
+  const register = (item) => {
+    if (item.children?.length) {
+      if (!itemIds[level]) {
+        itemIds[level] = [];
+      }
+      itemIds[level].push(item.id);
+      level++;
+      item.children.forEach(register);
+    } else {
+      level = 0;
+    }
+  };
+  treeItems.forEach(register);
+  return itemIds;
+};

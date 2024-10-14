@@ -3,8 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useSelector } from 'react-redux';
 import { dark, light } from './lib/palette';
 import Header from './organisms/Header';
-
-import TestContents from './organisms/TestContents';
+import DrugTreeView from './organisms/DrugTreeView';
 
 const darkTheme = createTheme({
   palette: dark,
@@ -19,7 +18,7 @@ const App = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline>
         <Header />
-        <TestContents />
+        <DrugTreeView />
       </CssBaseline>
     </ThemeProvider>
   );

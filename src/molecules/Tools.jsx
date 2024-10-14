@@ -1,21 +1,24 @@
 import Grid from '@mui/material/Grid2';
 import QrCodeScannerButton from './containers/Tools/QrCodeScannerButton';
-import ScanModal from '../organisms/ScanModal';
 import DarkModeButton from './containers/Tools/DarkModeButton';
+import ExpandTreeButtons from './containers/Tools/ExpandTreeButton';
 
 // Grid 대신 style Flexbox 활용하자
 const Tools = () => {
   return (
     <Grid container>
-      <Grid size={3}>
+      <Grid size={2}>
         <QrCodeScannerButton />
       </Grid>
-      <Grid size={3}>Report</Grid>
-      <Grid size={3}>Alert</Grid>
-      <Grid size={3}>
+      <Grid size={2}>
+        <ExpandTreeButtons />
+      </Grid>
+      <Grid size={2}>Report</Grid>
+      <Grid size={2}>Alert</Grid>
+      <Grid size={2}>Option</Grid>
+      <Grid size={2}>
         <DarkModeButton />
       </Grid>
-      <ScanModal />
     </Grid>
   );
 };

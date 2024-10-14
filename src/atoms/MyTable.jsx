@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 const style = {
-  fadedRow: { color: 'grey' },
+  // fadedRow: { color: 'grey' },
   tableCell: { color: 'inherit' },
 };
 
@@ -19,9 +19,6 @@ const MyTable = (props) => {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell align="left">{props.label}</TableCell>
-          </TableRow>
           <TableRow>
             {props.heads.map((v, i) => (
               <TableCell key={i}>{v}</TableCell>
@@ -32,7 +29,7 @@ const MyTable = (props) => {
           {props.rows.map((row, i) => (
             <TableRow
               key={i}
-              sx={props.fadeRow(row) ? style.fadedRow : null}
+              // sx={props.fadeRow(row) ? style.fadedRow : null}
               hover
             >
               {props.keys.map((v, i) => (
