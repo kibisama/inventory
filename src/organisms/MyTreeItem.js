@@ -4,7 +4,7 @@ import MyTreeItemLabel from '../molecules/MyTreeItemLabel';
 import MyTreeItemLabelInput from '../molecules/MyTreeItemLabelInput';
 import StyledTreeItemContent from '../molecules/StyledTreeItemContent';
 
-const MyTreeItem = React.forwardRef(function CustomTreeItem2(props, ref) {
+const MyTreeItem = React.forwardRef((props, ref) => {
   const [_error, set_Error] = React.useState(null);
   const { interactions, status, publicAPI } = useTreeItem2Utils({
     itemId: props.itemId,
@@ -21,7 +21,12 @@ const MyTreeItem = React.forwardRef(function CustomTreeItem2(props, ref) {
   const handleInputKeyDown = (event) => {
     event.defaultMuiPrevented = true;
   };
-
+  // Package Item 클릭시 NDC 클립보드에 저장
+  const handleOnClick = (event) => {
+    if (item.hierarchy === 2 && item.ndc11) {
+      window.navigator.clipboard.writeText(item.ndc11);
+    }
+  };
   return (
     <TreeItem2
       {...props}
@@ -37,8 +42,8 @@ const MyTreeItem = React.forwardRef(function CustomTreeItem2(props, ref) {
           editable: status.editable,
           editing: status.editing,
           onDoubleClick: handleContentDoubleClick,
+          onClick: handleOnClick,
           toggleItemEditing: interactions.toggleItemEditing,
-          // onKeyDown:
         },
         labelInput: {
           item: item,
