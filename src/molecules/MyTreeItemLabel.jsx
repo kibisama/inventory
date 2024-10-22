@@ -1,37 +1,46 @@
 import React from 'react';
 import { TreeItem2Label } from '@mui/x-tree-view/TreeItem2';
 import MyIconButton from '../atoms/MyIconButton';
+import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import Counter from '../atoms/Counter';
 import StarIcon from '@mui/icons-material/Star';
 import InvTables from './InvTables';
 
 const style = {
-  label: {
+  container: {
     height: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  label: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   status: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    fontSize: 'h6.fontSize',
   },
   starIcon: {
-    marginLeft: '1rem',
+    marginRight: 1,
     color: 'primary.main',
+    fontSize: 'h5.fontSize',
   },
   editIcon: {
-    marginLeft: '1rem',
+    fontSize: 'h6.fontSize',
+    marginLeft: 5,
+    marginRight: 1,
     color: 'grey',
     ':hover': { color: 'primary.main' },
   },
 };
 const fontStyle = [
-  { fontSize: '1.1rem' },
-  { fontSize: '1.05rem' },
-  { fontSize: '1rem' },
+  { fontSize: 'h5.fontSize' },
+  { fontSize: 'h6.fontSize' },
+  { fontSize: 'h6.fontSize' },
 ];
 
 const MyTreeItemLabel = ({
@@ -48,19 +57,16 @@ const MyTreeItemLabel = ({
       <TreeItem2Label
         {...other}
         editable={editable}
-        sx={{ ...style.label, ...fontStyle[hierarchy] }}
+        sx={{ ...style.container, ...fontStyle[hierarchy] }}
       >
-        {children}
+        <Box sx={style.label}>
+          {preferred && <StarIcon sx={style.starIcon} />}
+          {children}
+        </Box>
         <Box sx={style.status}>
           {hierarchy === 2 && <Counter count={count} optimalQty={optimalQty} />}
-          {preferred && <StarIcon sx={style.starIcon} />}
           {editable && (
-            <MyIconButton
-              variant="edit"
-              sx={style.editIcon}
-              fontSize="small"
-              onClick={toggleItemEditing}
-            />
+            <EditIcon sx={style.editIcon} onClick={toggleItemEditing} />
           )}
         </Box>
       </TreeItem2Label>

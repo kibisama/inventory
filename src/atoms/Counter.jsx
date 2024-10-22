@@ -1,7 +1,21 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const style = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  icon: {
+    color: 'primary.main',
+    fontSize: 'h6.fontSize',
+    marginRight: 0.5,
+  },
+  font: {
+    marginLeft: 0.5,
+    letterSpacing: 1,
+  },
   in: {
     color: 'success.main',
   },
@@ -29,8 +43,11 @@ const Counter = (props) => {
     }
   }, []);
   return (
-    <Box sx={getStyle(count, optimalQty)}>
-      {count} / {optimalQty ?? 0}
+    <Box sx={style.container}>
+      <InventoryIcon sx={style.icon} />
+      <Box sx={{ ...style.font, ...getStyle(count, optimalQty) }}>
+        {count} / {optimalQty ?? 0}
+      </Box>
     </Box>
   );
 };

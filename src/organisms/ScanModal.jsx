@@ -30,7 +30,6 @@ const style = {
 const ScanModal = () => {
   const dispatch = useDispatch();
   const { open, mode, inputDate, source } = useSelector((state) => state.scan);
-  const { offLineMode } = useSelector((state) => state.global);
   const handleClose = React.useCallback(() => {
     dispatch(setOpen(false));
     dispatch(setIsUpdated(false));
@@ -51,11 +50,10 @@ const ScanModal = () => {
         sn,
         inputDate,
         source,
-        offLineMode,
       };
       dispatch(asyncInvScan(body));
     },
-    [inputDate, mode, source, offLineMode, dispatch],
+    [inputDate, mode, source, dispatch],
   );
   const onError = React.useCallback(() => {
     dispatch(setError(99));
