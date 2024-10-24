@@ -6,7 +6,10 @@ import { Button } from '@mui/material';
 
 const TestContent = () => {
   const [date, setDate] = React.useState(dayjs());
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState({
+    invoiceNumbers: [],
+    duplicatesWithDifferentPrices: [],
+  });
   const [result, setResult] = React.useState({
     extraItems: [],
     missingItems: [],
@@ -43,7 +46,12 @@ const TestContent = () => {
   return (
     <>
       <MyDatePicker onChange={handleChange} label="Invoice Date" value={date} />
-      {data.length > 0 ? `invoice found: ${data}` : 'invoice not found'}
+      {data.invoiceNumbers.length > 0
+        ? `invoice found: ${data}`
+        : 'invoice not found'}
+      {data.duplicatesWithDifferentPrices.length > 0
+        ? `Some items have different prices: ${data.duplicatesWithDifferentPrices}`
+        : null}
       {data.length > 0 ? (
         <Button children="Run Report" onClick={handleRunReport} />
       ) : (
