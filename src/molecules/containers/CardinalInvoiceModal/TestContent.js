@@ -8,7 +8,6 @@ const TestContent = () => {
   const [date, setDate] = React.useState(dayjs());
   const [data, setData] = React.useState({
     invoiceNumbers: [],
-    duplicatesWithDifferentPrices: [],
   });
   const [result, setResult] = React.useState({
     extraItems: [],
@@ -21,6 +20,7 @@ const TestContent = () => {
         const { data } = await mongodAPI.getCardinalInvoice(
           date.format('MM-DD-YYYY'),
         );
+        console.log(data);
         setData(data);
       } catch (e) {
         console.log(e);
@@ -45,14 +45,19 @@ const TestContent = () => {
 
   return (
     <>
-      <MyDatePicker onChange={handleChange} label="Invoice Date" value={date} />
-      {data.invoiceNumbers.length > 0
+      <MyDatePicker
+        slotProps={{ textField: { size: 'small' } }}
+        onChange={handleChange}
+        label="Invoice Date"
+        value={date}
+      />
+      {data?.invoiceNumbers?.length > 0
         ? `invoice found: ${data}`
         : 'invoice not found'}
-      {data.duplicatesWithDifferentPrices.length > 0
+      {data?.duplicatesWithDifferentPrices?.length > 0
         ? `Some items have different prices: ${data.duplicatesWithDifferentPrices}`
         : null}
-      {data.length > 0 ? (
+      {data?.invoiceNumbers?.length > 0 ? (
         <Button children="Run Report" onClick={handleRunReport} />
       ) : (
         <Button children="Find invoice" />

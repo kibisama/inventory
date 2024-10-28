@@ -25,7 +25,7 @@ const CardinalInvoiceModal = (props) => {
     <Modal open={open}>
       <Box sx={style.container}>
         <UpperRightCloseButton
-          title="Cardinal Invoice"
+          title="Cardinal Invoice Report"
           onClick={props.handleClose}
         />
         <TestContent />

@@ -20,13 +20,12 @@ const style = {
   },
   title: {
     fontSize: 'h5.fontSize',
-    fontWeight: 600,
     mt: '1rem',
     ml: '3rem',
   },
 };
 
-const UpperRightCloseButton = ({ title, onClick }) => {
+const ModalHeader = ({ title, onClick }) => {
   return (
     <React.Fragment>
       <Box style={style.container}>
@@ -37,4 +36,4 @@ const UpperRightCloseButton = ({ title, onClick }) => {
   );
 };
 
-export default UpperRightCloseButton;
+export default ModalHeader;

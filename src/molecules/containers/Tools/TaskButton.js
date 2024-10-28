@@ -1,6 +1,6 @@
 import React from 'react';
 import MyIconButton from '../../../atoms/MyIconButton';
-import CardinalInvoiceModal from '../../../organisms/CardinalInvoiceModal';
+import CardinalInvoiceModal from '../../../components/organisms/CardinalInvoiceModal';
 
 const TaskButton = () => {
   const [open, setOpen] = React.useState(false);
