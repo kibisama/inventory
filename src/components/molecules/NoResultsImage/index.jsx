@@ -3,9 +3,9 @@ import src from '../../../svg/lookup.svg';
 
 const style = {
   container: {
-    width: 'fit-content',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   text: {

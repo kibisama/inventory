@@ -20,8 +20,8 @@ const style = {
   },
   title: {
     fontSize: 'h5.fontSize',
-    mt: '1rem',
-    ml: '3rem',
+    mt: 2,
+    ml: 4,
   },
 };
 

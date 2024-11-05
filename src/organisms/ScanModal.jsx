@@ -29,12 +29,13 @@ const style = {
 
 const ScanModal = () => {
   const dispatch = useDispatch();
-  const { open, mode, inputDate, source } = useSelector((state) => state.scan);
+  const { mode, inputDate, source, open } = useSelector((state) => state.scan);
   const handleClose = React.useCallback(() => {
     dispatch(setOpen(false));
     dispatch(setIsUpdated(false));
     dispatch(setError(null));
   }, [dispatch]);
+  // 이상 유즈이팩트의 리턴값으로 updated, error 초기화
   const onComplete = React.useCallback(
     (dataMatrix) => {
       const { gtin, lot, exp, sn } = parseDataMatrix(dataMatrix);

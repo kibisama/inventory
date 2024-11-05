@@ -27,6 +27,10 @@ const scanSlice = createSlice({
   },
   reducers: {
     setOpen: (state, action) => {
+      if (action.payload == null) {
+        state.open = !state.open;
+        return;
+      }
       state.open = action.payload;
     },
     setMode: (state, action) => {

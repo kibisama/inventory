@@ -2,15 +2,16 @@ import { Paper, Typography } from '@mui/material';
 
 const style = {
   container: {
-    minWidth: 100,
+    minWidth: 120,
     width: 'fit-content',
-    padding: '1rem',
+    px: 2,
+    py: 1,
     display: 'flex',
     flexDirection: 'column',
   },
   label: {
     fontSize: '1rem',
-    marginBottom: '1rem',
+    marginBottom: 2,
   },
   content: {
     display: 'flex',
@@ -22,7 +23,7 @@ const style = {
 
 const SummaryItem = (props) => {
   return (
-    <Paper sx={style.container}>
+    <Paper elevation={3} sx={style.container}>
       <Typography sx={style.label}>{props.label}</Typography>
       <Typography sx={style.content}>{props.content}</Typography>
     </Paper>
