@@ -5,7 +5,7 @@ const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
   height: 'fit-content',
   padding: '0.5rem',
   border: '1px solid transparent',
-  borderRadius: '10%',
+  borderRadius: 4,
   color: theme.palette.grey[500],
   ':hover': {
     color: theme.palette.primary.main,

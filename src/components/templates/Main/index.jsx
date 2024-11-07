@@ -4,7 +4,6 @@ import Header from '../../organisms/Header';
 import DrugTreeView from '../../../organisms/DrugTreeView';
 import CardinalInvoiceModal from '../CardinalInvoiceModal';
 import ScanModal from '../ScanModal';
-import QrCodeSVG from '../../atoms/svg/QrCode';
 
 const style = {
   container: {
@@ -17,10 +16,9 @@ const Main = () => {
   return (
     <Box sx={style.container}>
       <Header />
-      <QrCodeSVG />
       <DrugTreeView />
-      <CardinalInvoiceModal />
       <ScanModal />
+      <CardinalInvoiceModal />
     </Box>
   );
 };

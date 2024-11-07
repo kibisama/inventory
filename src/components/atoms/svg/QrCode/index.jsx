@@ -1,100 +1,70 @@
-import * as React from 'react';
 import { useTheme } from '@mui/material';
-import {
-  animated,
-  config,
-  useTransition,
-  useSpringRef,
-} from '@react-spring/web';
+import { animated, config, useSpring, useTrail } from '@react-spring/web';
 
-const QrCodeSVG = (props) => {
+const innerPath = [
+  'M233.333 300V233.333H300V300H233.333Z',
+  'M433.333 366.667V233.333H566.667V366.667H433.333Z',
+  'M566.667 500V566.667H500V500H566.667Z',
+  'M233.333 566.667V433.333H366.667V566.667H233.333Z',
+];
+const outerPath = [
+  'M266.667 100H133.333C124.493 100 116.014 103.512 109.763 109.763C103.512 116.014 100 124.493 100 133.333V266.667',
+  'M700 266.667V133.333C700 124.493 696.488 116.014 690.237 109.763C683.986 103.512 675.507 100 666.667 100H533.333',
+  'M533.333 700H666.667C675.507 700 683.986 696.488 690.237 690.237C696.488 683.986 700 675.507 700 666.667V533.333',
+  'M100 533.333V666.667C100 675.507 103.512 683.986 109.763 690.237C116.014 696.488 124.493 700 133.333 700H266.667',
+];
+
+const QrCodeSvg = (props) => {
   const { palette } = useTheme();
-  const strokeColor = palette.mode === 'dark' ? 'white' : 'black';
+  const strokeColor = palette.text.primary;
 
-  const innerPaths = [
-    { d: 'M167.333 234V167.333H234V234H167.333Z' },
-    {
-      d: 'M367.333 300.667V167.333H500.667V300.667H367.333Z',
-      fill: palette.primary.main,
+  const outerStyle = useSpring({
+    loop: { reverse: true },
+    from: {
+      transform: 'translate3d(5%,5%,0)',
+      scale: 0.9,
     },
-    { d: 'M500.667 434V500.667H434V434H500.667Z' },
-    {
-      d: 'M167.333 500.667V367.333H300.667V500.667H167.333Z',
-      fill: palette.primary.main,
-    },
-  ];
-
-  const springApi = useSpringRef();
-  const transition = useTransition(innerPaths, {
-    ref: springApi,
-    loop: true,
-    trail: 2000 / innerPaths.length,
-    from: { opacity: 0, scale: 0 },
-    enter: { opacity: 1, scale: 1 },
-    leave: { opacity: 0, scale: 0.5 },
-    config: config.molasses,
-    keys: 'd',
+    to: { transform: 'translate3d(0,0,0)', scale: 1 },
+    config: config.wobbly,
   });
-  React.useLayoutEffect(() => {
-    springApi.start();
-  }, [springApi]);
+  const trails = useTrail(innerPath.length, {
+    loop: { reverse: true },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: config.slow,
+  });
 
   return (
-    <>
-      <svg
-        onClick={() => {
-          springApi.start();
-        }}
-        width={props.size ?? 400}
-        height={props.size ?? 400}
-        viewBox="0 0 668 668"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        {...props}
-      >
-        {/* Frame */}
-        <path
-          d="M634 200.667V67.3333C634 58.4928 630.488 50.0143 624.237 43.7631C617.986 37.5119 609.507 34 600.667 34H467.333"
-          stroke={strokeColor}
-          strokeWidth={66.6667}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M467.333 634H600.667C609.507 634 617.986 630.488 624.237 624.237C630.488 617.986 634 609.507 634 600.667V467.333"
-          stroke={strokeColor}
-          strokeWidth={66.6667}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M200.667 34H67.3333C58.4928 34 50.0143 37.5119 43.7631 43.7631C37.5119 50.0143 34 58.4928 34 67.3333V200.667"
-          stroke={strokeColor}
-          strokeWidth={66.6667}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M34 467.333V600.667C34 609.507 37.5119 617.986 43.7631 624.237C50.0143 630.488 58.4928 634 67.3333 634H200.667"
-          stroke={strokeColor}
-          strokeWidth={66.6667}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {transition((style, item) => (
-          <animated.svg style={style}>
-            <path
-              d={item.d}
-              fill={item.fill}
-              stroke={strokeColor}
-              strokeWidth={66.6667}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </animated.svg>
+    <svg
+      viewBox="0 0 800 800"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      {trails.map((style, i) => (
+        <animated.g key={i} style={style}>
+          <path
+            d={innerPath[i]}
+            stroke={palette.primary.main}
+            strokeWidth={66.6667}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </animated.g>
+      ))}
+      <animated.g style={outerStyle}>
+        {outerPath.map((v, i) => (
+          <path
+            key={i}
+            d={v}
+            stroke={strokeColor}
+            strokeWidth={66.6667}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         ))}
-      </svg>
-    </>
+      </animated.g>
+    </svg>
   );
 };
-export default QrCodeSVG;
+export default QrCodeSvg;

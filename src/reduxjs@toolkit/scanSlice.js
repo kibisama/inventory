@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
 import * as mongodAPI from '../lib/api/mongod';
 
 const asyncInvScan = createAsyncThunk(
@@ -18,9 +17,9 @@ const scanSlice = createSlice({
   name: 'scan',
   initialState: {
     open: false,
-    mode: 'Receive',
-    inputDate: dayjs().format(),
-    source: 'Cardinal',
+    mode: 'RECEIVE',
+    source: 'CARDINAL',
+    cost: undefined,
     isUpdating: false,
     isUpdated: false,
     error: null,
@@ -36,11 +35,11 @@ const scanSlice = createSlice({
     setMode: (state, action) => {
       state.mode = action.payload;
     },
-    setInputDate: (state, action) => {
-      state.inputDate = action.payload;
-    },
     setSource: (state, action) => {
       state.source = action.payload;
+    },
+    setCost: (state, action) => {
+      state.cost = action.payload;
     },
     setIsUpdated: (state, action) => {
       state.isUpdated = action.payload;
@@ -71,12 +70,6 @@ const scanSlice = createSlice({
 });
 
 export default scanSlice.reducer;
-export const {
-  setOpen,
-  setMode,
-  setInputDate,
-  setSource,
-  setIsUpdated,
-  setError,
-} = scanSlice.actions;
+export const { setOpen, setMode, setSource, setCost, setIsUpdated, setError } =
+  scanSlice.actions;
 export { asyncInvScan };

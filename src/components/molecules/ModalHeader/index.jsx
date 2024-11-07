@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
@@ -12,11 +12,10 @@ const style = {
   },
   icon: {
     cursor: 'pointer',
-    color: 'grey',
     ':hover': {
       color: 'primary.main',
     },
-    fontSize: '2rem',
+    fontSize: 36,
   },
   title: {
     fontSize: 'h5.fontSize',
@@ -25,14 +24,16 @@ const style = {
   },
 };
 
-const ModalHeader = ({ title, onClick }) => {
+const ModalHeader = ({ title, handleClose }) => {
+  const { palette } = useTheme();
   return (
-    <React.Fragment>
-      <Box style={style.container}>
-        <CloseIcon sx={style.icon} onClick={onClick} />
-        <Typography sx={style.title}>{title}</Typography>
-      </Box>
-    </React.Fragment>
+    <Box style={style.container}>
+      <CloseIcon
+        sx={{ ...style.icon, color: palette.grey[500] }}
+        onClick={handleClose}
+      />
+      {title && <Typography sx={style.title}>{title}</Typography>}
+    </Box>
   );
 };
 

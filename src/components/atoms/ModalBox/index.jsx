@@ -2,7 +2,7 @@ import { Box, Zoom, styled } from '@mui/material';
 
 const StyledBox = styled(Box)(({ theme }) => ({
   border: '1px solid transparent',
-  borderRadius: '2%',
+  borderRadius: 10,
   backgroundColor: theme.palette.background.paper,
   ':hover': {
     borderColor:
