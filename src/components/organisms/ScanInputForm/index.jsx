@@ -75,10 +75,15 @@ const ScanInputForm = ({ status }) => {
     },
     [mode, source, cost, dispatch],
   );
-  const onError = React.useCallback(() => {
-    dispatch(setError(1));
-  }, [dispatch]);
+
+  const onError = React.useCallback(
+    (code) => {
+      dispatch(setError(1));
+    },
+    [dispatch],
+  );
   useScanDetection({
+    startCharacter: '(',
     onComplete: onComplete,
     onError: onError,
     minLength: 38,
@@ -98,7 +103,7 @@ const ScanInputForm = ({ status }) => {
           ))}
         </ToggleButtonGroup>
       </Box>
-      <ScanStatusDiagram />
+      <ScanStatusDiagram status={status} />
       <Box sx={style.bottom}>
         <ToggleButtonGroup
           disabled={disabled}

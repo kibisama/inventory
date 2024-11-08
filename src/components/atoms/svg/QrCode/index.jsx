@@ -58,7 +58,7 @@ const QrCodeSvg = (props) => {
             key={i}
             d={v}
             stroke={strokeColor}
-            strokeWidth={66.6667}
+            strokeWidth={50}
             strokeLinecap="round"
             strokeLinejoin="round"
           />

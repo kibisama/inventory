@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import { animated, config, useSpring, useTrail } from '@react-spring/web';
+import { animated, config, useTrail } from '@react-spring/web';
 
 const paths = [
   'M334 34V134',
@@ -29,7 +29,7 @@ const LoadingSvg = (props) => {
       {...props}
     >
       {trails.map((style, i) => (
-        <animated.g style={style}>
+        <animated.g key={i} style={style}>
           <path
             d={paths[i]}
             stroke={palette.text.primary}

@@ -3,6 +3,8 @@ import { Box } from '@mui/material';
 
 import QrCodeSvg from '../svg/QrCode';
 import LoadingSvg from '../svg/Loading';
+import WarningSvg from '../svg/Warning';
+import VerifiedSvg from '../svg/Verified';
 
 const style = {
   width: '100%',
@@ -11,15 +13,16 @@ const style = {
   justifyContent: 'center',
 };
 
-const ScanStatusDiagram = ({ isUpdating, isUpdated, error }) => {
+const ScanStatusDiagram = ({ status }) => {
+  const { isUpdating, isUpdated, error } = status;
   return (
     <Box sx={style}>
       {error ? (
-        <QrCodeSvg />
+        <WarningSvg />
       ) : isUpdating ? (
         <LoadingSvg />
       ) : isUpdated ? (
-        <QrCodeSvg />
+        <VerifiedSvg />
       ) : (
         <QrCodeSvg />
       )}

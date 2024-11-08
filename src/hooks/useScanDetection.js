@@ -37,6 +37,8 @@ const useScanDetection = (_a) => {
       .slice(startCharacter.length > 0 ? 1 : 0)
       .map((_a) => _a.char)
       .join('');
+    //
+    console.log(buffer.current);
     if (
       avg <= averageWaitTime &&
       buffer.current.slice(startCharacter.length > 0 ? 1 : 0).length >=
