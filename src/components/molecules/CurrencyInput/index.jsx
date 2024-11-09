@@ -32,7 +32,7 @@ const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
 const CurrencyInput = React.forwardRef((props, ref) => {
   return (
     <TextField
-      sx={{ width: 120 }}
+      sx={{ width: 140, ...props.sx }}
       slotProps={{
         input: {
           inputComponent: NumericFormatCustom,

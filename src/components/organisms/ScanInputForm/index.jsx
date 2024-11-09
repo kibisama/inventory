@@ -7,6 +7,7 @@ import {
   setMode,
   setSource,
   setCost,
+  setIsUpdated,
   setError,
 } from '../../../reduxjs@toolkit/scanSlice';
 import ScanStatusDiagram from '../../atoms/ScanStatusDiagram/ScanStatusDiagram';
@@ -52,16 +53,26 @@ const ScanInputForm = ({ status }) => {
     },
     [dispatch],
   );
-  const { mode, source, cost } = status;
+  const { mode, source, cost, isUpdated, error } = status;
   const disabled = mode !== 'RECEIVE';
 
+  const timeout = React.useRef(null);
+  React.useEffect(() => {
+    if (isUpdated) {
+      timeout.current = setTimeout(() => {
+        dispatch(setIsUpdated(false));
+      }, 3000);
+    }
+  }, [dispatch, isUpdated]);
   const onComplete = React.useCallback(
-    (dataMatrix) => {
-      const { gtin, lot, exp, sn } = parseDataMatrix(dataMatrix);
+    (code) => {
+      clearTimeout(timeout.current);
+      const { gtin, lot, exp, sn } = parseDataMatrix(code);
       if (!gtin || !lot || !exp || !sn) {
         dispatch(setError(1));
         return;
       }
+      // else if (error) {
       const body = {
         mode,
         gtin,
@@ -72,16 +83,17 @@ const ScanInputForm = ({ status }) => {
         cost,
       };
       dispatch(asyncInvScan(body));
+      // }
     },
     [mode, source, cost, dispatch],
   );
-
   const onError = React.useCallback(
     (code) => {
       dispatch(setError(1));
     },
     [dispatch],
   );
+
   useScanDetection({
     onComplete: onComplete,
     onError: onError,

@@ -45,6 +45,7 @@ const scanSlice = createSlice({
       state.isUpdated = action.payload;
     },
     setError: (state, action) => {
+      state.isUpdated = false;
       state.error = action.payload;
     },
   },
@@ -56,7 +57,7 @@ const scanSlice = createSlice({
     builder.addCase(asyncInvScan.fulfilled, (state, action) => {
       state.isUpdating = false;
       state.isUpdated = true;
-      //
+      // data+error handling
       if (action.payload.error != null) {
         state.error = action.payload.error;
       } else {

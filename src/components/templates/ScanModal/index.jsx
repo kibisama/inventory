@@ -1,10 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setOpen,
-  setIsUpdated,
-  setError,
-} from '../../../reduxjs@toolkit/scanSlice';
+import { setOpen, setError } from '../../../reduxjs@toolkit/scanSlice';
 import { Modal } from '@mui/material';
 import ModalBox from '../../atoms/ModalBox';
 import ModalHeader from '../../molecules/ModalHeader';
@@ -29,10 +25,9 @@ const ScanModal = () => {
   const error = status.error;
   const handleClose = () => {
     dispatch(setOpen(false));
-    dispatch(setIsUpdated(false));
+    dispatch(setError(null));
   };
   const handleChildClose = () => {
-    dispatch(setIsUpdated(false));
     dispatch(setError(null));
   };
 
