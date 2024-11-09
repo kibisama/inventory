@@ -83,7 +83,6 @@ const ScanInputForm = ({ status }) => {
     [dispatch],
   );
   useScanDetection({
-    startCharacter: '(',
     onComplete: onComplete,
     onError: onError,
     minLength: 38,

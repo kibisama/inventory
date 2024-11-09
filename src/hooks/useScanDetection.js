@@ -8,7 +8,7 @@ const useScanDetection = (_a) => {
     _d = _a.startCharacter,
     startCharacter = React.useMemo(() => (_d === void 0 ? [] : _d), [_d]),
     _e = _a.endCharacter,
-    endCharacter = React.useMemo(() => (_e === void 0 ? [13, 27] : _e), [_e]),
+    endCharacter = React.useMemo(() => (_e === void 0 ? ['Enter'] : _e), [_e]),
     onComplete = _a.onComplete,
     onError = _a.onError,
     _f = _a.minLength,
@@ -33,33 +33,48 @@ const useScanDetection = (_a) => {
       .slice(1)
       .reduce((total, delta) => total + delta, 0);
     const avg = sum / (buffer.current.length - 1);
-    const code = buffer.current
+    const current = buffer.current;
+    const code = current
       .slice(startCharacter.length > 0 ? 1 : 0)
       .map((_a) => _a.char)
       .join('');
-    //
-    console.log(buffer.current);
     if (
       avg <= averageWaitTime &&
-      buffer.current.slice(startCharacter.length > 0 ? 1 : 0).length >=
-        minLength
+      endCharacter.includes(current[current.length - 1]?.char)
     ) {
-      onComplete(code);
-    } else {
-      avg <= averageWaitTime && !!onError && onError(code);
+      if (
+        buffer.current.slice(startCharacter.length > 0 ? 1 : 0).length >=
+        minLength
+      ) {
+        onComplete(code);
+      } else {
+        !!onError && onError(code);
+      }
     }
     clearBuffer();
-  }, [averageWaitTime, minLength, onComplete, onError, startCharacter]);
+  }, [
+    averageWaitTime,
+    minLength,
+    onComplete,
+    onError,
+    startCharacter,
+    endCharacter,
+  ]);
 
   const onKeyPress = React.useCallback(
     (event) => {
       if (event.currentTarget !== ignoreIfFocusOn) {
-        if (endCharacter.includes(event.keyCode)) {
+        if (
+          buffer.current.slice(startCharacter.length > 0 ? 1 : 0).length >=
+            minLength &&
+          endCharacter.includes(event.key)
+        ) {
+          buffer.current.push({ time: performance.now(), char: event.key });
           evaluateBuffer();
         }
         if (
           buffer.current.length > 0 ||
-          startCharacter.includes(event.keyCode) ||
+          startCharacter.includes(event.key) ||
           startCharacter.length === 0
         ) {
           clearTimeout(timeout.current);
@@ -82,6 +97,7 @@ const useScanDetection = (_a) => {
       startCharacter,
       stopPropagation,
       timeToEvaluate,
+      minLength,
     ],
   );
 
