@@ -37,7 +37,7 @@ const style = {
 const modes = ['RECEIVE', 'FILL', 'REVERSE', 'RETURN'];
 const sources = ['CARDINAL', 'SECONDARY'];
 
-const ScanInputForm = ({ status }) => {
+const ScanInputForm = ({ state }) => {
   const dispatch = useDispatch();
   const handleModeChange = React.useCallback(
     (e) => dispatch(setMode(e.target.value)),
@@ -53,7 +53,8 @@ const ScanInputForm = ({ status }) => {
     },
     [dispatch],
   );
-  const { mode, source, cost, isUpdated, error } = status;
+  const { mode, source, cost, isUpdating, isUpdated, error } = state;
+  const status = { isUpdating, isUpdated, error };
   const disabled = mode !== 'RECEIVE';
 
   const timeout = React.useRef(null);
@@ -63,9 +64,13 @@ const ScanInputForm = ({ status }) => {
         dispatch(setIsUpdated(false));
       }, 3000);
     }
+    return () => clearTimeout(timeout.current);
   }, [dispatch, isUpdated]);
   const onComplete = React.useCallback(
     (code) => {
+      if (document.activeElement === document.querySelector('input')) {
+        return;
+      }
       clearTimeout(timeout.current);
       const { gtin, lot, exp, sn } = parseDataMatrix(code);
       if (!gtin || !lot || !exp || !sn) {

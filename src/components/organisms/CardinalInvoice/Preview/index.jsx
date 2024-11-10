@@ -1,44 +1,52 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   asyncGetCardinalInvoice,
-  asyncPostCardinalInvoice,
+  asyncReviewCardinalInvoice,
+  asyncFindCardinalInvoice,
   setDate,
 } from '../../../../reduxjs@toolkit/cardinalInvoiceSlice';
 import dayjs from 'dayjs';
-import { Box, Button } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import MyDatePicker from '../../../molecules/MyDatePicker';
-import NoResultFoundImage from '../../../molecules/NoResultsImage';
+import SearchingSvg from '../../../atoms/svg/Searching';
 import PreviewSummary from '../PreviewSummary';
 
 const style = {
   container: {
     width: '100%',
-    mt: 0.5,
+    px: '36px',
+    pb: '36px',
     display: 'flex',
     flexDirection: 'column',
   },
   top: {
-    my: 1,
-    mx: 8,
+    py: 1.5,
     display: 'flex',
     justifyContent: 'space-evenly',
   },
   bottom: {
+    height: 360,
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     minWidth: 140,
   },
+  datePicker: {
+    width: 180,
+  },
+  figure: {
+    width: 300,
+  },
 };
 
-const Preview = () => {
+const Preview = ({ state }) => {
+  const { date, previewData, isUpdating } = state;
   const dispatch = useDispatch();
   const today = dayjs();
-  const { date, previewData } = useSelector((state) => state.cardinalInvoice);
-
   const handleDateChange = React.useCallback(
     (value) => {
       dispatch(setDate(value.format('MM-DD-YYYY')));
@@ -46,17 +54,25 @@ const Preview = () => {
     [dispatch],
   );
   const onClickReview = React.useCallback(() => {
-    dispatch(asyncPostCardinalInvoice(date));
+    dispatch(asyncReviewCardinalInvoice(date));
+  }, [dispatch, date]);
+  const onClickFind = React.useCallback(() => {
+    dispatch(asyncFindCardinalInvoice(date));
   }, [dispatch, date]);
 
   React.useEffect(() => {
-    dispatch(asyncGetCardinalInvoice(date));
+    if (!isUpdating) {
+      dispatch(asyncGetCardinalInvoice(date));
+    }
+    // must not include isUpdating below
   }, [dispatch, date]);
 
   return (
     <Box sx={style.container}>
       <Box sx={style.top}>
         <MyDatePicker
+          sx={style.datePicker}
+          disabled={isUpdating}
           slotProps={{ textField: { size: 'small' } }}
           label="Invoice Date"
           value={dayjs(date)}
@@ -65,6 +81,7 @@ const Preview = () => {
         />
         {previewData ? (
           <Button
+            disabled={isUpdating}
             variant="outlined"
             sx={style.button}
             children="review"
@@ -72,17 +89,23 @@ const Preview = () => {
           />
         ) : (
           <Button
+            disabled={isUpdating}
             variant="outlined"
             sx={style.button}
             children="find invoice"
+            onClick={onClickFind}
           />
         )}
       </Box>
       <Box sx={style.bottom}>
-        {previewData ? (
+        {isUpdating ? (
+          <CircularProgress />
+        ) : previewData ? (
           <PreviewSummary data={previewData} />
         ) : (
-          <NoResultFoundImage />
+          <Box sx={style.figure}>
+            <SearchingSvg />
+          </Box>
         )}
       </Box>
     </Box>

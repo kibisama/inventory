@@ -1,46 +1,58 @@
-import { useSelector } from 'react-redux';
-import { Box, Modal } from '@mui/material';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Modal } from '@mui/material';
+import {
+  setOpen,
+  setResultData,
+  setError,
+} from '../../../reduxjs@toolkit/cardinalInvoiceSlice';
 import ModalHeader from '../../molecules/ModalHeader';
+import ModalBox from '../../atoms/ModalBox';
 import Preview from '../../organisms/CardinalInvoice/Preview';
 import Result from '../../organisms/CardinalInvoice/Result';
+import ChildErrorModal from '../../templates/ChildErrorModal';
 
 const style = {
-  modal: {
-    minWidth: 640,
-    minHeight: 480,
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 12,
-    borderRadius: 1,
+  container: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  header: {},
-  content: {
-    flexGrow: 1,
-    display: 'flex',
-    // alignItems: 'stretch',
+  box: {
+    width: 640,
   },
 };
 
-const CardinalInvoiceModal = ({ handleOpen }) => {
-  const { open, resultData, isRequesting } = useSelector(
-    (state) => state.cardinalInvoice,
-  );
+const CardinalInvoiceModal = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.cardinalInvoice);
+  const open = state.open;
+  const error = state.error;
+  const handleClose = () => {
+    dispatch(setOpen(false));
+    dispatch(setResultData(null));
+  };
+  const handleChildClose = () => {
+    dispatch(setError(null));
+  };
 
   return (
-    <Modal open={open}>
-      <Box sx={style.modal}>
-        <Box sx={style.header}>
-          <ModalHeader title="Cardinal Invoice Review" onClick={handleOpen} />
-        </Box>
-        <Box sx={style.content}>
-          {resultData ? <Result data={resultData} /> : <Preview />}
-        </Box>
-      </Box>
+    <Modal sx={style.container} open={open}>
+      <React.Fragment>
+        <ModalBox sx={style.box}>
+          <ModalHeader
+            title="Cardinal Invoice Review"
+            handleClose={handleClose}
+          />
+          {/* {resultData ? (
+            <Result data={resultData} />
+          ) : (
+            <Preview date={date} data={previewData} disabled={isRequesting} />
+          )} */}
+          <Preview state={state} />
+          <ChildErrorModal error={error} handleClose={handleChildClose} />
+        </ModalBox>
+      </React.Fragment>
     </Modal>
   );
 };

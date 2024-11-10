@@ -20,9 +20,9 @@ const style = {
 
 const ScanModal = () => {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.scan);
-  const open = status.open;
-  const error = status.error;
+  const state = useSelector((state) => state.scan);
+  const open = state.open;
+  const error = state.error;
   const handleClose = () => {
     dispatch(setOpen(false));
     dispatch(setError(null));
@@ -36,7 +36,7 @@ const ScanModal = () => {
       <React.Fragment>
         <ModalBox sx={style.box}>
           <ModalHeader handleClose={handleClose} />
-          <ScanInputForm status={status} />
+          <ScanInputForm state={state} />
           <ChildErrorModal error={error} handleClose={handleChildClose} />
         </ModalBox>
       </React.Fragment>

@@ -55,14 +55,13 @@ const scanSlice = createSlice({
       state.isUpdating = true;
     });
     builder.addCase(asyncInvScan.fulfilled, (state, action) => {
-      state.isUpdating = false;
-      state.isUpdated = true;
-      // data+error handling
       if (action.payload.error != null) {
         state.error = action.payload.error;
       } else {
         state.error = null;
+        state.isUpdated = true;
       }
+      state.isUpdating = false;
     });
     builder.addCase(asyncInvScan.rejected, (state, action) => {
       state.error = 500;

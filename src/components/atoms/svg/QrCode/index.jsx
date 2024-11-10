@@ -20,6 +20,7 @@ const QrCodeSvg = (props) => {
 
   const outerStyle = useSpring({
     loop: { reverse: true },
+    reset: true,
     from: {
       transform: 'translate3d(5%,5%,0)',
       scale: 0.9,

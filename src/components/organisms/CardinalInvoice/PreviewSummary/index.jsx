@@ -1,14 +1,14 @@
-import { Box, Grow, Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import ReportSummaryItem from '../../../molecules/SummaryItem';
+import textGenerator from './text';
 
 const style = {
   container: {
     width: '100%',
-    px: 4,
-    py: 2,
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
   top: {
     display: 'flex',
@@ -16,58 +16,25 @@ const style = {
   },
   bottom: {},
   paper: {
-    minHeight: 180,
-    p: 1,
+    minHeight: 240,
+    p: 2,
   },
 };
 
-const generateText = (data = {}) => {
-  const {
-    duplicatesWithDifferentPrices,
-    backorderedItems,
-    differentQtyShipped,
-  } = data;
-  let text = '';
-  if (text === '') {
-    return 'Please click Review button to proceed.';
-  }
-  return text;
-};
-
-const PreviewSummary = (props) => {
-  const { invoiceNumbers, invoiceTotalShipped, invoiceTotalAmount } =
-    props.data;
+const PreviewSummary = ({ data }) => {
+  const { invoiceNumbers, invoiceTotalShipped, invoiceTotalAmount } = data;
+  console.log(data);
   return (
     <Box sx={style.container}>
       <Box sx={style.top}>
-        <Grow in timeout={250}>
-          <div>
-            <ReportSummaryItem
-              label="Invoices"
-              content={invoiceNumbers.length}
-            />
-          </div>
-        </Grow>
-        <Grow in timeout={500}>
-          <div>
-            <ReportSummaryItem label="Items" content={invoiceTotalShipped} />
-          </div>
-        </Grow>
-        <Grow in timeout={750}>
-          <div>
-            <ReportSummaryItem
-              label="Total Amount"
-              content={invoiceTotalAmount}
-            />
-          </div>
-        </Grow>
+        <ReportSummaryItem label="Invoices" content={invoiceNumbers.length} />
+        <ReportSummaryItem label="Items" content={invoiceTotalShipped} />
+        <ReportSummaryItem label="Total Amount" content={invoiceTotalAmount} />
       </Box>
       <Box sx={style.bottom}>
-        <Grow in timeout={750}>
-          <Paper elevation={3} sx={style.paper}>
-            {generateText(props.data)}
-          </Paper>
-        </Grow>
+        <Paper elevation={3} sx={style.paper}>
+          {textGenerator(data)}
+        </Paper>
       </Box>
     </Box>
   );

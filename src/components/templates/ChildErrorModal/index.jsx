@@ -27,6 +27,8 @@ const generateErrorMsg = (error) => {
   switch (error) {
     case 1:
       return 'An invalid code scanned. Please try again.';
+    case 11:
+      return 'Cardinal Puppet is busy. Please try later.';
     case 500:
       return 'Internal server error (500)';
     default:
