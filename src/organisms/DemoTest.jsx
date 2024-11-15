@@ -53,7 +53,7 @@ const DemoTest = (props) => {
               <TableRow key={i}>
                 <TableCell>{v.package.brand_name}</TableCell>
                 <TableCell>{v.item.cost ?? 'UNKNOWN'}</TableCell>
-                <TableCell>{v.cardinalPrice ?? 'PENDING'}</TableCell>
+                <TableCell>{v.cardinalCost ?? 'PENDING'}</TableCell>
                 <TableCell>
                   {v.secondaryDetails?.pkgPrice ?? 'PENDING'}
                 </TableCell>
