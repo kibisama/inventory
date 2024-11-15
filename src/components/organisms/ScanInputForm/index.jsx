@@ -47,9 +47,18 @@ const ScanInputForm = ({ state }) => {
     (e) => dispatch(setSource(e.target.value)),
     [dispatch],
   );
+  const inputTimeout = React.useRef(null);
+  const handleFocus = () => {
+    inputTimeout.current = setTimeout(
+      () => document.querySelector('input').blur(),
+      5000,
+    );
+  };
   const handleCostChange = React.useCallback(
     (e) => {
+      clearTimeout(inputTimeout.current);
       dispatch(setCost(e.target.value ? '$' + e.target.value : undefined));
+      handleFocus();
     },
     [dispatch],
   );
@@ -68,7 +77,7 @@ const ScanInputForm = ({ state }) => {
   }, [dispatch, isUpdated]);
   const onComplete = React.useCallback(
     (code) => {
-      if (document.activeElement === document.querySelector('input')) {
+      if (document.activeElement === document.querySelector('input').current) {
         return;
       }
       clearTimeout(timeout.current);
@@ -141,6 +150,7 @@ const ScanInputForm = ({ state }) => {
           disabled={disabled}
           label="COST"
           onChange={handleCostChange}
+          onFocus={handleFocus}
         />
       </Box>
     </Box>

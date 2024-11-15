@@ -10,7 +10,7 @@ const asyncGetCardinalInvoice = createAsyncThunk(
       const { data } = await mongodAPI.getCardinalInvoice(date);
       return data;
     } catch (e) {
-      console.log(e);
+      return rejectWithValue(e.response.status);
     }
   },
 );
@@ -21,7 +21,7 @@ const asyncReviewCardinalInvoice = createAsyncThunk(
       const { data } = await mongodAPI.reviewCardinalInvoice(date);
       return data;
     } catch (e) {
-      console.log(e);
+      return rejectWithValue(e.response.status);
     }
   },
 );
@@ -32,7 +32,7 @@ const asyncFindCardinalInvoice = createAsyncThunk(
       const { data } = await puppetAPI.findCardinalInvoice(date);
       return data;
     } catch (e) {
-      return rejectWithValue(e.response.data);
+      return rejectWithValue(e.response.status);
     }
   },
 );
@@ -77,6 +77,10 @@ const cardinalInvoiceSlice = createSlice({
     builder.addCase(asyncGetCardinalInvoice.rejected, (state, action) => {
       state.previewData = null;
       state.isUpdating = false;
+      if (action.payload === 404) {
+        return;
+      }
+      state.error = action.payload || 500;
     });
     builder.addCase(asyncReviewCardinalInvoice.pending, (state, action) => {
       state.isUpdating = true;

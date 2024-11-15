@@ -35,7 +35,12 @@ const useScanDetection = (_a) => {
     const avg = sum / (buffer.current.length - 1);
     const current = buffer.current;
     const code = current
-      .slice(startCharacter.length > 0 ? 1 : 0)
+      .slice(
+        startCharacter.length > 0 ? 1 : 0,
+        current[current.length - 1].char === 'Enter'
+          ? current.length - 1
+          : current.length,
+      )
       .map((_a) => _a.char)
       .join('');
     if (
