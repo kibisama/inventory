@@ -1,10 +1,11 @@
+import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 import Header from '../../organisms/Header';
+import DailyOrderView from '../DailyOrderView';
 
 import DrugTreeView from '../../../organisms/DrugTreeView';
 import CardinalInvoiceModal from '../CardinalInvoiceModal';
 import ScanModal from '../ScanModal';
-import DemoTest from '../../../organisms/DemoTest';
 
 const style = {
   container: {
@@ -14,11 +15,12 @@ const style = {
 };
 
 const Main = () => {
+  const { mainView } = useSelector((state) => state.global);
   return (
     <Box sx={style.container}>
       <Header />
-      {/* <DrugTreeView /> */}
-      <DemoTest />
+      {mainView === 'inventories' && <DrugTreeView />}
+      {mainView === 'daily orders' && <DailyOrderView />}
       <ScanModal />
       <CardinalInvoiceModal />
     </Box>

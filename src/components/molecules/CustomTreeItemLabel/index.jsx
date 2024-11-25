@@ -5,8 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import Counter from '../atoms/Counter';
 import StarIcon from '@mui/icons-material/Star';
-import InvTable from '../components/organisms/InvTable';
-// import InvTables from './InvTables';
+import InvTables from './InvTables';
 
 const style = {
   container: {
@@ -39,9 +38,9 @@ const style = {
   },
 };
 const fontStyle = [
-  { fontSize: '1rem' },
-  { fontSize: '1rem' },
-  { fontSize: '1rem' },
+  { fontSize: 'h5.fontSize' },
+  { fontSize: 'h6.fontSize' },
+  { fontSize: 'h6.fontSize' },
 ];
 
 const MyTreeItemLabel = ({
@@ -74,11 +73,7 @@ const MyTreeItemLabel = ({
     );
   }
   if (data.length > 0) {
-    return (
-      <Box sx={{ width: '95%' }}>
-        <InvTable rows={data} />
-      </Box>
-    );
+    return <InvTables data={data} />;
   }
 };
 

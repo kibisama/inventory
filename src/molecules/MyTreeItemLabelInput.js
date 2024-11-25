@@ -10,8 +10,8 @@ const style = {
 };
 
 const fontStyle = [
-  { fontSize: '1.1rem' },
-  { fontSize: '1.05rem' },
+  { fontSize: '1rem' },
+  { fontSize: '1rem' },
   { fontSize: '1rem' },
 ];
 const MyTreeItemLabelInput = React.forwardRef(

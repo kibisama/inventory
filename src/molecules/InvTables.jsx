@@ -21,6 +21,7 @@ const InvTables = (props) => {
   //     return false;
   //   }
   // }, []);
+  console.log(props);
 
   return (
     <Box sx={style.container}>

@@ -34,7 +34,7 @@ const DrugTreeView = () => {
     };
     fetch();
   }, [dispatch]);
-
+  console.log(result);
   if (result.length === 0) {
     return null;
   }

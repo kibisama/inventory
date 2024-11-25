@@ -3,18 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const globalSlice = createSlice({
   name: 'global',
   initialState: {
-    darkMode: false,
-    offLineMode: false,
+    mainView: 'inventories',
+    darkMode: true,
   },
   reducers: {
+    setMainView: (state, action) => {
+      state.mainView = action.payload;
+    },
     setDarkMode: (state, action) => {
       state.darkMode = action.payload;
-    },
-    setOffLineMode: (state, action) => {
-      state.offLineMode = action.payload;
     },
   },
 });
 
 export default globalSlice.reducer;
-export const { setDarkMode, setOffLineMode } = globalSlice.actions;
+export const { setMainView, setDarkMode } = globalSlice.actions;
