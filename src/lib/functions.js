@@ -1,6 +1,21 @@
 /**
  *
  * @param {string} dataMatrix
+ * @returns {string}
+ */
+export const formatCurrency = (currencyString) => {
+  return Number(currencyString.replaceAll(/[^0-9.]+/g, '')).toLocaleString(
+    'en-US',
+    {
+      style: 'currency',
+      currency: 'USD',
+    },
+  );
+};
+
+/**
+ *
+ * @param {string} dataMatrix
  * @returns {Object}
  */
 export const parseDataMatrix = (dataMatrix) => {

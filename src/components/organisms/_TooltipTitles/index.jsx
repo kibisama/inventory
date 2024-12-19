@@ -3,18 +3,21 @@ import dayjs from 'dayjs';
 import { Box, Divider, Typography } from '@mui/material';
 
 const style = {
-  description: {
-    fontSize: '1rem',
-  },
-  lastUpdated: {
-    justifySelf: 'flex-end',
-    fontSize: '0.7rem',
+  psDetails: {
+    description: {
+      fontSize: '1rem',
+    },
+    lastUpdated: {
+      justifySelf: 'flex-end',
+      fontSize: '0.7rem',
+    },
   },
 };
 
-const PSDetailsTooltip = ({ data = {} }) => {
+export const PSDetailsTooltip = ({ data = {} }) => {
   const { description, pkg, lastUpdated, lotExpDate, qtyAvl, wholesaler } =
     data;
+  const _style = style.psDetails;
   let _lastUpdated = '';
   if (dayjs().isSame(lastUpdated, 'day')) {
     _lastUpdated += 'Today ' + dayjs(lastUpdated).format('hh:mm A');
@@ -23,8 +26,8 @@ const PSDetailsTooltip = ({ data = {} }) => {
   }
   return (
     <React.Fragment>
-      <Typography sx={style.description}>{description}</Typography>
-      <Typography sx={style.lastUpdated}>{_lastUpdated}</Typography>
+      <Typography sx={_style.description}>{description}</Typography>
+      <Typography sx={_style.lastUpdated}>{_lastUpdated}</Typography>
       <Divider />
       <Typography>{lotExpDate}</Typography>
       <Typography>{qtyAvl}</Typography>
@@ -32,5 +35,3 @@ const PSDetailsTooltip = ({ data = {} }) => {
     </React.Fragment>
   );
 };
-
-export default PSDetailsTooltip;

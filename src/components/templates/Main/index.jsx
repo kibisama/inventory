@@ -19,7 +19,8 @@ const Main = () => {
   return (
     <Box sx={style.container}>
       <Header />
-      {mainView === 'inventories' && <DrugTreeView />}
+      {/* {mainView === 'inventories' && <DrugTreeView />} */}
+      {mainView === 'inventories' && 'coming soon'}
       {mainView === 'daily orders' && <DailyOrderView />}
       <ScanModal />
       <CardinalInvoiceModal />

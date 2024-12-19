@@ -1,8 +1,8 @@
 import React from 'react';
-import dayjs from 'dayjs';
-import DOTable from '../../organisms/DOTable';
-import * as mongodAPI from '../../../lib/api/mongod';
+import Table from '../../organisms/_DailyOrderView/Table';
+import Toolbar from '../../organisms/_DailyOrderView/Toolbar';
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const style = {
   container: {
@@ -11,24 +11,11 @@ const style = {
 };
 
 const DailyOrderView = () => {
-  const [results, setResults] = React.useState([]);
-  React.useEffect(() => {
-    const fetch = async () => {
-      try {
-        const { data } = await mongodAPI.getDailyOrder(
-          dayjs().format('MM-DD-YYYY'),
-        );
-        setResults(data.results);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetch();
-  }, []);
-  console.log(results);
+  const { results } = useSelector((state) => state.dailyOrder);
   return (
     <Box sx={style.container}>
-      <DOTable rows={results} />
+      <Toolbar />
+      <Table rows={results} />
     </Box>
   );
 };

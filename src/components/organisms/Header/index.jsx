@@ -40,7 +40,6 @@ const Header = () => {
         <Box sx={style.logo}>
           <Logo />
         </Box>
-        <Box>Search</Box>
         <Box>
           <Tools onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
         </Box>
