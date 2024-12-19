@@ -46,7 +46,19 @@ const formats = {
     }
     return <CustomTableCell title={title} subtitle={subtitle} />;
   },
-  cardinalAlt: () => 'DISABLED',
+  cardinalAlt: (v) => {
+    let title = 'N/A';
+    let subtitle = '$0.00';
+    const estNetCost = v.cardinalAlt?.estNetCost;
+    const netUoiCost = v.cardinalAlt?.netUoiCost;
+    if (estNetCost) {
+      title = formatCurrency(estNetCost);
+    }
+    if (netUoiCost) {
+      subtitle = formatCurrency(netUoiCost);
+    }
+    return <CustomTableCell title={title} subtitle={subtitle} />;
+  },
   psDetails: (v) => {
     let title = '';
     let subtitle = '';
