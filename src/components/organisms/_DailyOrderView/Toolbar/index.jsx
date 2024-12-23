@@ -4,6 +4,8 @@ import { Box } from '@mui/material';
 import MyDatePicker from '../../../molecules/MyDatePicker';
 import { asyncGetDailyOrder } from '../../../../reduxjs@toolkit/orderSlice';
 import { useDispatch } from 'react-redux';
+import StyledButtonBase from '../../../atoms/StyledButtonBase';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 const style = {
   container: {
@@ -22,8 +24,9 @@ const Toolbar = () => {
     setDate(value);
   };
   const dispatchFn = () => {
-    timeout.current = setTimeout(() => dispatchFn(), 30000);
+    clearTimeout(timeout.current);
     dispatch(asyncGetDailyOrder(date.format('MM-DD-YYYY')));
+    timeout.current = setTimeout(() => dispatchFn(), 30000);
   };
   React.useEffect(() => {
     dispatchFn();
@@ -37,6 +40,9 @@ const Toolbar = () => {
         maxDate={today}
         onChange={handleChange}
       />
+      <StyledButtonBase onClick={dispatchFn}>
+        <RefreshIcon />
+      </StyledButtonBase>
     </Box>
   );
 };

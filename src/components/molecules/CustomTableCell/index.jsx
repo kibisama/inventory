@@ -1,5 +1,11 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import {
+  Badge,
+  Box,
+  CircularProgress,
+  Typography,
+  styled,
+} from '@mui/material';
 import StyledTooltip from '../../organisms/StyledTooltip';
 
 const style = {
@@ -8,23 +14,37 @@ const style = {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  title: { fontSize: '1rem' },
+  titleOnly: { fontSize: '1rem' },
+  title: { fontSize: '0.85rem' },
   subtitle: {
-    fontSize: '0.75rem',
+    fontSize: '0.65rem',
     color: 'text.secondary',
   },
 };
 
-const CustomTableCell = ({ title, subtitle, tooltip }) => {
-  const content = (
-    <React.Fragment>
-      <Typography sx={style.title}>{title}</Typography>
-      {subtitle && <Typography sx={style.subtitle}>{subtitle}</Typography>}
-    </React.Fragment>
+const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
+  color:
+    theme.palette.mode === 'dark'
+      ? theme.palette.grey[700]
+      : theme.palette.grey[300],
+}));
+
+const CustomTableCell = ({ title, subtitle, badge, tooltip }) => {
+  const content = title ? (
+    <Badge variant="dot" color={badge}>
+      <Box>
+        <Typography sx={subtitle ? style.title : style.titleOnly}>
+          {title}
+        </Typography>
+        {subtitle && <Typography sx={style.subtitle}>{subtitle}</Typography>}
+      </Box>
+    </Badge>
+  ) : (
+    <StyledCircularProgress size="1.5rem" />
   );
   return (
     <Box sx={style.container}>
-      {tooltip ? (
+      {tooltip && title ? (
         <StyledTooltip title={tooltip}>
           <Box>{content}</Box>
         </StyledTooltip>

@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import { Badge } from '@mui/material';
+import { CardinalProductTooltip, PSDetailsTooltip } from './tooltips';
 import CustomTableCell from '../../../molecules/CustomTableCell';
 import { formatCurrency } from '../../../../lib/functions';
 
@@ -33,18 +36,30 @@ const formats = {
   },
   item: (v) => v.item.cost ?? 'UNKNOWN',
   qty: (v) => v.item.length,
+  //
   cardinalProduct: (v) => {
-    let title = 'N/A';
-    let subtitle = '$0.00';
-    const estNetCost = v.cardinalProduct?.estNetCost;
-    const netUoiCost = v.cardinalProduct?.netUoiCost;
-    if (estNetCost) {
-      title = formatCurrency(estNetCost);
+    let title = '';
+    let subtitle = '';
+    let badge = false;
+    const lastUpdated = v.cardinalProduct?.lastUpdated;
+    if (lastUpdated) {
+      const estNetCost = v.cardinalProduct.estNetCost;
+      if (estNetCost) {
+        title += estNetCost;
+        subtitle += formatCurrency(v.cardinalProduct.netUoiCost);
+      } else {
+        title += 'N/A';
+      }
     }
-    if (netUoiCost) {
-      subtitle = formatCurrency(netUoiCost);
-    }
-    return <CustomTableCell title={title} subtitle={subtitle} />;
+    return (
+      <CustomTableCell
+        title={title}
+        subtitle={subtitle}
+        tooltip={
+          subtitle ? <CardinalProductTooltip data={v.cardinalProduct} /> : null
+        }
+      />
+    );
   },
   cardinalAlt: (v) => {
     let title = 'N/A';
@@ -59,49 +74,65 @@ const formats = {
     }
     return <CustomTableCell title={title} subtitle={subtitle} />;
   },
+  // 완
   psDetails: (v) => {
     let title = '';
     let subtitle = '';
+    let shortDated = false;
     const pkgPrice = v.psDetails?.pkgPrice;
     if (pkgPrice) {
       title += pkgPrice;
-      if (pkgPrice !== 'NOT AVAILABLE') {
-        subtitle += Number(
-          v.psDetails.unitPrice.replaceAll(/[^0-9.]+/g, ''),
-        ).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        });
+      if (pkgPrice !== 'N/A') {
+        subtitle += formatCurrency(v.psDetails.unitPrice);
       }
-    }
-    if (!title) {
-      title += 'PENDING';
+      const shortDate = dayjs().add(11, 'month');
+      const expDate = dayjs(v.psDetails.lotExpDate, 'MM/YY');
+      if (expDate.isBefore(shortDate)) {
+        shortDated = true;
+      }
     }
     return (
       <CustomTableCell
         title={title}
-        subtitle={subtitle ? subtitle : null}
-        // tooltip={
-        //   pkgPrice && pkgPrice !== 'NOT AVAILABLE' ? (
-        //     <PSDetailsTooltip data={v.psDetails} />
-        //   ) : null
-        // }
+        subtitle={subtitle}
+        badge={shortDated ? 'warning' : ''}
+        tooltip={
+          subtitle ? (
+            <PSDetailsTooltip
+              data={{ ...v.psDetails, lastUpdated: v.psLastUpdated }}
+              shortDated={shortDated}
+            />
+          ) : null
+        }
       />
     );
   },
-  psAlts: (v) =>
-    v.psAlts.length > 0
-      ? v.psAlts[0]?.pkgPrice === 'NOT AVAILABLE'
-        ? 'NOT AVAILABLE'
-        : `${v.psAlts[0]?.pkgPrice} (${Number(
-            v.psAlts[0]?.unitPrice.replaceAll(/[^0-9.]+/g, ''),
-          ).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          })})`
-      : v.psDetails?.pkgPrice
-      ? 'NO BETTER DEALS'
-      : 'PENDING',
+  psAlts: (v) => {
+    let title = '';
+    let subtitle = '';
+    let shortDated = false;
+    const alt = v.psAlts[0];
+    if (alt) {
+      const pkgPrice = alt.pkgPrice;
+      title += pkgPrice;
+      if (pkgPrice !== 'N/A') {
+        subtitle += formatCurrency(alt.unitPrice);
+      }
+    }
+    return <CustomTableCell title={title} subtitle={subtitle} />;
+  },
+  // v.psAlts.length > 0
+  //   ? v.psAlts[0]?.pkgPrice === 'NOT AVAILABLE'
+  //     ? 'NOT AVAILABLE'
+  //     : `${v.psAlts[0]?.pkgPrice} (${Number(
+  //         v.psAlts[0]?.unitPrice.replaceAll(/[^0-9.]+/g, ''),
+  //       ).toLocaleString('en-US', {
+  //         style: 'currency',
+  //         currency: 'USD',
+  //       })})`
+  //   : v.psDetails?.pkgPrice
+  //   ? 'NO BETTER DEALS'
+  //   : 'PENDING',
 };
 
 export default formats;

@@ -17,6 +17,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
   },
+  paddingTop: 5,
+  paddingBottom: 5,
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
@@ -36,12 +38,11 @@ const CustomTable = ({
   rowOnClick,
   cellStyles = {},
   aligns = {},
-  size = 'small',
   hover = false,
 }) => {
   return (
     <TableContainer>
-      <Table size={size}>
+      <Table>
         <TableHead>
           <StyledTableRow>
             {keys.map((v, i) => (

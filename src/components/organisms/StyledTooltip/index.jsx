@@ -20,9 +20,11 @@ const StyledTooltip = styled(({ className, ...props }) => (
     // }}
     slots={{ transition: Zoom }}
     slotProps={{ transition: { timeout: 200 } }}
+    disableFocusListener={true}
   />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
+    color: theme.palette.text.primary,
     border: '1px solid',
     borderRadius: 4,
     backgroundColor: theme.palette.background.paper,
@@ -30,6 +32,7 @@ const StyledTooltip = styled(({ className, ...props }) => (
       theme.palette.mode === 'dark'
         ? theme.palette.grey[400]
         : theme.palette.grey[600],
+    maxWidth: '100%',
   },
 }));
 
